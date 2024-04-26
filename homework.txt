@@ -1,0 +1,95 @@
+Corpus de trois ouvrages de deux auteurs (V. Hugo et G. Flaubert) issus du site de l'ABU
+et disponible au format utf8 depuis le lien :
+https://perso.limsi.fr/pap/inalco/TNML3_2023_2024/corpus_hugo_flaubert_3.tgz
+
+L'éducation sentimentale de G. Flaubert
+Quatre-vingt treize de V. Hugo
+Notre Dame de Paris de V. Hugo
+
+Pour déposer vos devoir (programmes Python et un dossier de programmation, décrivant
+vos réalisation et les problèmes que vous avez rencontrés) vous recevrez par courrier
+un lien vers un répertoire où vous pourrez les téléverser.
+
+
+a) Ecrire en Python une fonction ("FiltrOnePOS") utilisant des expressions régulières
+   pour extraire toutes les entrées non ambigües (celles qui n'ont qu'une seule
+   partie du discours possible) du lexique : dimaju-4.1.1-utf8.txt.
+   
+   Livrables: la fonction python et le sous-lexique extrait.
+
+b) Ecrire en Python une fonction ("CVTok") qui prend comme argument un texte en français (str)
+   et produit en sortie la liste de ses tokens identifiés au moyen d'expressions régulières et
+   répartis en 3 types :
+       - CV (séquence contigüe de caractères visibles qui ne sont pas des ponctuations),
+       - PN (ponctuation), 
+       - ES (espace).
+   Les tokens seront représentés par une liste de triplets de chaines de caractères (str),
+   dont
+   - le premier élément sera le token original,
+   - le second la représentation normalisée de la forme originale (votre normalisation
+     devra au moins convertir les majuscules en minuscules et corriger d'éventuelles erreurs
+     d'encodage)
+   - le troisième élément sera le type du token (CV, PN ou ES).
+
+   Ecrivez ensuite une seconde fonction ("printCVTok") qui prend comme argument un nom de fichier
+   et la liste produite par "CVTok" et range dans ce fichier un triplet par ligne sous forme de sa
+   représentation Python (str), par ex. ('Normalement', 'normalement', 'CV') 
+
+   Livrables: les deux fonctions Python et la liste des triplets produite à partir d'un extrait du corpus
+   choisi au hasard et contenant environ 4500 caractères. (n'oubliez pas de préciser quel extrait
+   du corpus a été choisi, en indiquant l'ouvrage et les positions de caractères de début et de fin).
+
+   # voici comment en Python choisir un extrait de taille 4500 caractères au hasard dans un document
+   from random import randrange
+   text = open( 'montexte.txt', 'r' ).read()
+   deb = randrange( len( text ) - 4500 )
+   excerpt = text[ deb : deb + 4500 ]
+
+c) Ecrire en utilisant des expressions régulières une fonction en Pyhon ("CVTokPOS1") à partir de la fonction
+   précédente et qui utilise le sous-lexique extrait dans la première question et qui produit
+   une nouvelle liste, cette fois-ce de quadruplets de chaines de caractères,  contenant les éléments
+   des triplets précédents auxquel viendra s'ajouter, si le token normalisé  est une des formes non ambigüe,
+   son étiquette  morphosyntaxique extraite du sous-lexique sinon le marqueur "None".
+
+   Ecrivez ensuite une seconde fonction ("printCVTokPOS1") qui stockera les quadruplets dans un fichier
+   à raison d'un quadruplet par ligne sous forme de sa représentation Python (str), par ex.
+   ('Normalement', 'normalement', 'CV', 'ADV') 
+
+   Livrables: les deux fonctions Python et la liste des quadruplets produite à partir de l'extrait de corpus
+   de la question précédente.
+
+d) Ecrivez une fonction Python ("printStatPOS1") qui calcule le pourcentage de formes (hors ponctuations) dont la partie du
+   discours n'est pas ambigüe par rapport au nombre de formes total, ouvrage par ouvrage, puis globalement pour tout
+   le corpus.
+
+   Cette fonction prendra en entrée une liste des noms des fichiers du corpus, un chemin (str) vers le répertoire où sont
+   stockés ces fichiers, ainsi qu'un troisième argument qui est un chemin (str) vers un répertoire, dans lequel
+   seront écrits les versions modifiées du corpus comme décrit ci-dessous, à raison d'un fichier pour chaque fichier d'entrée
+   (vous ajouterez au nom de chaque fichier d'entrée,  le suffixe '.POS1Chunk' pour produire le fichier de sortie correspondant).
+   Les fichiers de sortie comprendront tous les quadruplets des fichiers d'entrée, mais ceux-ci seront
+   stoké selon le format suivant :
+     -chaque ligne commencera par une séquence de tokens non ambigus consécutifs (au minimum de taille 1) suivie
+      de la séquence des tokens ambigus jusqu'au prochain token non ambigu (ce dernier token non-ambigu, ne sera
+      pas stocké sur cette ligne mais commencera la ligne suivante)
+      
+   Par ailleurs, le résulat retourné par cette fonction sera un dictionnaire structuré de la manière suivante :
+    { 'pourcentAmbig' : { dictionnaire dont les clés seront les noms des ouvrages et les valeurs
+                          les pourcentages calculés; ce dictionnaire contiendra aussi une clé 'CORPUS' associé
+			  à la valeur du pourcentage d'ambiguité calculé sur tout le corpus. },
+      'POS1seqsz' : { dictionnaire dont les clés seront les noms des ouvrages et les valeurs, une paire constitutée
+                      en première position de la taille moyenne des sequences de tokens occupant une ligne
+		      et en seconde position de l'écart type de cette taille moyenne pour l'ouvrage.
+		      Ce dictionnaire contiendra aussi une association avec une clé 'CORPUS' associée à la paire
+		      de valeur taille-moyenne, écart-type des tailles de séquences calculées sur tout le corpus.
+
+   Livrables: la fonction Python et les version modifiées des fichiers du corpus ainsi que le résultat de l'impression
+   à l'écrant du contenu du dictionnaire de statistique résulat (que vous pourrez avoir formaté sous forme de tableau).
+
+
+
+
+
+
+                      
+   
+
